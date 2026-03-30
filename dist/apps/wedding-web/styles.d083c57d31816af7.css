@@ -1,0 +1,1 @@
+:root{--content-max-width: 920px;--content-side-padding: 20px}*{box-sizing:border-box}body{margin:0}.page-content{width:100%;max-width:var(--content-max-width);margin:0 auto;padding:32px var(--content-side-padding)}.container{width:100%;max-width:var(--content-max-width);margin:0 auto;padding-left:var(--content-side-padding);padding-right:var(--content-side-padding)}

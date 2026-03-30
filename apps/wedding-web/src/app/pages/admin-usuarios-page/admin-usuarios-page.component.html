@@ -1,0 +1,80 @@
+<section class="admin-page">
+  <h1>Panel Admin - CRUD Usuarios</h1>
+
+  <div class="messages success" *ngIf="mensajeOk">{{ mensajeOk }}</div>
+  <div class="messages error" *ngIf="mensajeError">{{ mensajeError }}</div>
+
+  <div class="card" *ngIf="!adminAuthService.isLoggedIn()">
+    <h2>Sesión requerida</h2>
+    <p>Debes iniciar sesión como admin para usar el CRUD de usuarios.</p>
+    <button type="button" (click)="irALoginAdmin()">Ir a login admin</button>
+  </div>
+
+  <div *ngIf="adminAuthService.isLoggedIn()" class="admin-content">
+    <div class="card card-row">
+      <button type="button" (click)="cargarTodos()">Listar todos</button>
+      <button type="button" (click)="onLogoutAdmin()">Cerrar sesión</button>
+    </div>
+
+    <div class="card">
+      <h2>Buscar usuario por ID</h2>
+      <div class="inline-controls">
+        <input type="number" [(ngModel)]="buscarId" name="buscarId" placeholder="ID" />
+        <button type="button" (click)="buscarUno()">Buscar uno</button>
+      </div>
+      <div *ngIf="usuarioBuscado" class="result-box">
+        <p><strong>ID:</strong> {{ usuarioBuscado.id }}</p>
+        <p><strong>Nombre:</strong> {{ usuarioBuscado.nombre }} {{ usuarioBuscado.apellido }}</p>
+        <p><strong>Correo:</strong> {{ usuarioBuscado.correo }}</p>
+        <p><strong>Rol:</strong> {{ usuarioBuscado.rol }}</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>{{ usuarioForm.id ? 'Actualizar usuario' : 'Añadir usuario' }}</h2>
+      <form (ngSubmit)="guardarUsuario()" class="grid-form">
+        <input type="text" [(ngModel)]="usuarioForm.nombre" name="nombre" placeholder="Nombre" required />
+        <input type="text" [(ngModel)]="usuarioForm.apellido" name="apellido" placeholder="Apellido" required />
+        <input type="email" [(ngModel)]="usuarioForm.correo" name="correo" placeholder="Correo" required />
+        <input type="password" [(ngModel)]="usuarioForm.password" name="usuarioPassword" placeholder="Password" required />
+        <select [(ngModel)]="usuarioForm.rol" name="rol">
+          <option value="USER">USER</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+
+        <div class="inline-controls">
+          <button type="submit">{{ usuarioForm.id ? 'Actualizar' : 'Crear' }}</button>
+          <button type="button" (click)="resetFormulario()">Limpiar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Usuarios</h2>
+      <table *ngIf="usuarios.length > 0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.nombre }} {{ usuario.apellido }}</td>
+            <td>{{ usuario.correo }}</td>
+            <td>{{ usuario.rol }}</td>
+            <td>
+              <button type="button" (click)="prepararEdicion(usuario)">Editar</button>
+              <button type="button" (click)="eliminarUsuario(usuario.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="usuarios.length === 0">No hay usuarios para mostrar.</p>
+    </div>
+  </div>
+</section>

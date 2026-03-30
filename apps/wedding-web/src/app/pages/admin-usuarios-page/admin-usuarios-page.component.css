@@ -1,0 +1,109 @@
+.admin-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #dfe6ee;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.card-row {
+  display: flex;
+  gap: 12px;
+}
+
+h1,
+h2 {
+  color: #17324d;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.inline-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+input,
+select,
+button {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #c5cfda;
+}
+
+button {
+  background: #1c6da8;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #175a8a;
+}
+
+.messages {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.success {
+  background: #e9f9ef;
+  color: #216e3a;
+}
+
+.error {
+  background: #fdeaea;
+  color: #8a1f1f;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e7edf5;
+  text-align: left;
+  padding: 8px;
+}
+
+.result-box {
+  margin-top: 10px;
+  background: #f6f9fc;
+  border: 1px solid #dce6f2;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .grid-form {
+    grid-template-columns: 1fr;
+  }
+
+  .card-row,
+  .inline-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

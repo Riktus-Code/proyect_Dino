@@ -1,0 +1,18 @@
+<section class="admin-login-page">
+  <div class="card">
+    <h1>Login</h1>
+    <p>Bienvenido, ¿Quieres saber si estas invitado? Introduce tus credenciales y podrás comprobarlo</p>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <form (ngSubmit)="onLogin()">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" [(ngModel)]="nombre" name="nombre" required />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" [(ngModel)]="password" name="password" required />
+
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+{
+  "name": "wedding-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/wedding-api/src/main/java",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/wedding-api",
+        "command": "mvn spring-boot:run"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/wedding-api",
+        "command": "mvn clean package"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/wedding-api",
+        "command": "mvn test"
+      }
+    }
+  },
+  "tags": []
+}

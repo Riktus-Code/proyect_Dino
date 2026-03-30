@@ -1,0 +1,48 @@
+.admin-login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #f3f8fc 0%, #dfeaf7 100%);
+  padding: 20px;
+}
+
+.card {
+  width: min(420px, 100%);
+  background: #ffffff;
+  border: 1px solid #d9e6f3;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(17, 40, 66, 0.08);
+}
+
+h1 {
+  margin-top: 0;
+  color: #14314f;
+}
+
+form {
+  display: grid;
+  gap: 10px;
+}
+
+input,
+button {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #c4cfdb;
+}
+
+button {
+  border: none;
+  background: #1a669e;
+  color: #fff;
+  cursor: pointer;
+}
+
+.error {
+  background: #fdecec;
+  color: #7f1d1d;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}

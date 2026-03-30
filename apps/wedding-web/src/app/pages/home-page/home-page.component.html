@@ -1,0 +1,31 @@
+<section class="home-shell">
+	<header class="top-header">
+		<div class="container header-inner">
+			<nav class="main-nav">
+				<a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+				<a routerLink="/invitacion" routerLinkActive="active-link">Invitación</a>
+				<a routerLink="/detalles" routerLinkActive="active-link">Detalles</a>
+				<a routerLink="/confirmacion" routerLinkActive="active-link">Confirmación</a>
+				<a routerLink="/admin/usuarios" routerLinkActive="active-link">Admin</a>
+			</nav>
+
+			<div class="header-login" *ngIf="!adminAuthService.isLoggedIn(); else loggedUser">
+				<a class="login-icon-btn" routerLink="/admin/login" aria-label="Ir a login">
+					<span class="icon-user" aria-hidden="true"></span>
+				</a>
+			</div>
+
+			<ng-template #loggedUser>
+				<div class="logged-box">
+					<span>{{ adminAuthService.getNombre() }}</span>
+					<button type="button" (click)="logoutDesdeHeader()">Salir</button>
+				</div>
+			</ng-template>
+		</div>
+	</header>
+
+	<main class="home-content">
+		<h1>Wedding Web</h1>
+		<p>Home sencilla con navegación principal y acceso de sesión desde el icono de usuario.</p>
+	</main>
+</section>
