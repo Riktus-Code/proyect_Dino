@@ -1,0 +1,63 @@
+<section class="invitation-shell">
+	<header class="top-header">
+		<div class="container header-inner">
+			<nav class="main-nav">
+				<a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+				<a routerLink="/invitados" routerLinkActive="active-link">Invitados</a>
+				<a routerLink="/detalles" routerLinkActive="active-link">Detalles</a>
+				<a routerLink="/confirmacion" routerLinkActive="active-link">Confirmación</a>
+			</nav>
+
+			<div class="header-login" *ngIf="!adminAuthService.isLoggedIn(); else loggedUser">
+				<a class="login-icon-btn" routerLink="/admin/login" aria-label="Ir a login">
+					<span class="icon-user" aria-hidden="true"></span>
+				</a>
+			</div>
+
+			<ng-template #loggedUser>
+				<div class="logged-box">
+					<span>{{ adminAuthService.getNombre() }}</span>
+					<button type="button" (click)="logoutDesdeHeader()">Salir</button>
+				</div>
+			</ng-template>
+		</div>
+	</header>
+
+	<main class="invitation-content">
+		<section class="lookup-card" aria-labelledby="lookup-title">
+			<p class="eyebrow">Consulta de invitación</p>
+			<h1 id="lookup-title">Comprueba si tu nombre figura en la lista de invitados</h1>
+			<p class="intro-copy">
+				Introduce tus datos tal y como aparecen en tu invitación para poder continuar con la experiencia completa del evento.
+			</p>
+
+			<form class="lookup-form" (ngSubmit)="buscarInvitado()">
+				<label for="nombre">Nombre</label>
+				<input
+					id="nombre"
+					type="text"
+					name="nombre"
+					required
+					autocomplete="given-name"
+					[(ngModel)]="nombre"
+				/>
+
+				<label for="apellido">Apellido</label>
+				<input
+					id="apellido"
+					type="text"
+					name="apellido"
+					required
+					autocomplete="family-name"
+					[(ngModel)]="apellido"
+				/>
+
+				<p class="error-message" *ngIf="error">{{ error }}</p>
+
+				<button type="submit" [disabled]="enviando">
+					{{ enviando ? 'Comprobando...' : 'Comprobar invitación' }}
+				</button>
+			</form>
+		</section>
+	</main>
+</section>

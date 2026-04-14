@@ -52,6 +52,9 @@
     "serve": {
       "continuous": true,
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "proxyConfig": "apps/wedding-web/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "buildTarget": "wedding-web:build:production"

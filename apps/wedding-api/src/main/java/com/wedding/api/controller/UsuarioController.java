@@ -1,10 +1,12 @@
 package com.wedding.api.controller;
 
+import com.wedding.api.dto.InvitadoLookupResponseDto;
 import com.wedding.api.entity.Usuario;
 import com.wedding.api.repository.UsuarioRepository;
 import com.wedding.api.service.AdminAuthService;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"}, methods = {
+@CrossOrigin(origins = "*", methods = {
         org.springframework.web.bind.annotation.RequestMethod.GET,
         org.springframework.web.bind.annotation.RequestMethod.POST,
         org.springframework.web.bind.annotation.RequestMethod.PUT,
@@ -38,6 +41,29 @@ public class UsuarioController {
 
     private boolean isUnauthorized(String token) {
         return !adminAuthService.isValidAdminToken(token);
+    }
+
+    @GetMapping("/buscar-invitado")
+    public ResponseEntity<InvitadoLookupResponseDto> buscarInvitado(
+            @RequestParam String nombre,
+            @RequestParam String apellido
+    ) {
+        String nombreLimpio = nombre == null ? "" : nombre.trim();
+        String apellidoLimpio = apellido == null ? "" : apellido.trim();
+
+        boolean parametrosInvalidos = Stream.of(nombreLimpio, apellidoLimpio).anyMatch(String::isBlank);
+        if (parametrosInvalidos) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Usuario> usuario = usuarioRepository
+                .findFirstByNombreIgnoreCaseAndApellidoIgnoreCase(nombreLimpio, apellidoLimpio);
+
+        InvitadoLookupResponseDto response = usuario
+                .map(u -> new InvitadoLookupResponseDto(true, u.getNombre(), u.getApellido()))
+                .orElseGet(() -> new InvitadoLookupResponseDto(false, nombreLimpio, apellidoLimpio));
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping

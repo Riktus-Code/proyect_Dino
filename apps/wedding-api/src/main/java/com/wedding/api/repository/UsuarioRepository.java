@@ -8,5 +8,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	Optional<Usuario> findByCorreo(String correo);
 
+	Optional<Usuario> findFirstByNombreIgnoreCaseAndApellidoIgnoreCase(String nombre, String apellido);
+
 	Optional<Usuario> findFirstByNombreAndPassword(String nombre, String password);
 }

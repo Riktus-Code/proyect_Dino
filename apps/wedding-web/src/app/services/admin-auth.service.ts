@@ -12,7 +12,7 @@ interface AdminLoginResponse {
   providedIn: 'root',
 })
 export class AdminAuthService {
-  private readonly apiUrl = 'http://localhost:8080/api/auth';
+  private readonly apiUrl = this.resolveApiBaseUrl();
   private readonly tokenKey = 'session_token';
   private readonly nombreKey = 'session_nombre';
   private readonly rolKey = 'session_rol';
@@ -49,5 +49,14 @@ export class AdminAuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.nombreKey);
     localStorage.removeItem(this.rolKey);
+  }
+
+  private resolveApiBaseUrl(): string {
+    const configuredUrl = (globalThis as { __WEDDING_API_URL__?: string }).__WEDDING_API_URL__;
+    if (configuredUrl) {
+      return `${configuredUrl.replace(/\/$/, '')}/auth`;
+    }
+
+    return 'http://localhost:8080/api/auth';
   }
 }

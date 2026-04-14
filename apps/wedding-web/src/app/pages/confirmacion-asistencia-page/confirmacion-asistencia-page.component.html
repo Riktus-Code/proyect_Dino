@@ -1,3 +1,58 @@
-<section class="page-content">
-	<h1>ConfirmacionAsistenciaPageComponent</h1>
+<section class="confirm-shell">
+	<header class="top-header">
+		<div class="container header-inner">
+			<nav class="main-nav">
+				<a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+				<a routerLink="/invitados" routerLinkActive="active-link">Invitados</a>
+				<a routerLink="/detalles" routerLinkActive="active-link">Detalles</a>
+				<a routerLink="/confirmacion" routerLinkActive="active-link">Confirmación</a>
+			</nav>
+
+			<div class="header-login" *ngIf="!adminAuthService.isLoggedIn(); else loggedUser">
+				<a class="login-icon-btn" routerLink="/admin/login" aria-label="Ir a login">
+					<span class="icon-user" aria-hidden="true"></span>
+				</a>
+			</div>
+
+			<ng-template #loggedUser>
+				<div class="logged-box">
+					<span>{{ adminAuthService.getNombre() }}</span>
+					<button type="button" (click)="logoutDesdeHeader()">Salir</button>
+				</div>
+			</ng-template>
+		</div>
+	</header>
+
+	<main class="confirm-content">
+		<section class="confirm-card" aria-labelledby="confirm-title">
+			<p class="eyebrow">Confirmación de asistencia</p>
+			<h1 id="confirm-title">Confirma tu asistencia</h1>
+			<p class="intro-copy">
+				Rellena tus datos para comprobar tu invitación y registrar si asistirás acompañado o no.
+			</p>
+
+			<form class="confirm-form" (ngSubmit)="confirmarAsistencia()">
+				<label for="nombre">Nombre</label>
+				<input id="nombre" name="nombre" type="text" [(ngModel)]="nombre" required autocomplete="given-name" />
+
+				<label for="apellido">Apellido</label>
+				<input id="apellido" name="apellido" type="text" [(ngModel)]="apellido" required autocomplete="family-name" />
+
+				<label for="alergias">Alergias / intolerancias</label>
+				<textarea id="alergias" name="alergias" rows="4" [(ngModel)]="alergias" placeholder="Escribe aquí si existe alguna alergia o intolerancia"></textarea>
+
+				<label class="checkbox-row">
+					<input id="acompanante" name="acompanante" type="checkbox" [(ngModel)]="acompanante" />
+					<span>¿Irás acompañado?</span>
+				</label>
+
+				<p class="error-message" *ngIf="error">{{ error }}</p>
+				<p class="success-message" *ngIf="mensajeExito">{{ mensajeExito }}</p>
+
+				<button type="submit" [disabled]="enviando">
+					{{ enviando ? 'Guardando...' : 'Confirmar asistencia' }}
+				</button>
+			</form>
+		</section>
+	</main>
 </section>

@@ -1,3 +1,70 @@
-<section class="page-content">
-	<h1>DetallesBodaPageComponent</h1>
+<section class="ceremony-shell">
+	<header class="top-header">
+		<div class="container header-inner">
+			<nav class="main-nav">
+				<a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+				<a routerLink="/invitados" routerLinkActive="active-link">Invitados</a>
+				<a routerLink="/detalles" routerLinkActive="active-link">Detalles</a>
+				<a routerLink="/confirmacion" routerLinkActive="active-link">Confirmación</a>
+			</nav>
+
+			<div class="header-login" *ngIf="!adminAuthService.isLoggedIn(); else loggedUser">
+				<a class="login-icon-btn" routerLink="/admin/login" aria-label="Ir a login">
+					<span class="icon-user" aria-hidden="true"></span>
+				</a>
+			</div>
+
+			<ng-template #loggedUser>
+				<div class="logged-box">
+					<span>{{ adminAuthService.getNombre() }}</span>
+					<button type="button" (click)="logoutDesdeHeader()">Salir</button>
+				</div>
+			</ng-template>
+		</div>
+	</header>
+
+	<main class="ceremony-content">
+		<section class="ceremony-info">
+			<h1 class="section-title">Detalles de la Ceremonia</h1>
+
+			<div class="info-block">
+				<h2 class="info-block-title">Lugar</h2>
+				<p class="info-block-text">
+					Finca Almodóvar Carretera de, km 3,5, Churriana, 29130
+					 Cártama, Málaga<br />
+					
+				</p>
+			</div>
+
+			<div class="map-container">
+				<!-- Google Maps Embed
+					Este enlace deja seleccionado por defecto el sitio "Alejandra Catering"
+					con la dirección de la ceremonia.
+				-->
+				<iframe
+					class="map-embed"
+					loading="lazy"
+					allowfullscreen
+					referrerpolicy="no-referrer-when-downgrade"
+					src="https://www.google.com/maps?q=Alejandra%20Catering%2C%20Finca%20Almodovar%20Carretera%20de%20km%203%2C5%2C%20Churriana%2C%2029130%20Cartama%2C%20Malaga&output=embed"
+				>
+				</iframe>
+			</div>
+
+			<div class="info-block">
+				<h2 class="info-block-title">Hora del Enlace</h2>
+				<p class="info-block-text">
+					<strong>12:00 pm</strong>
+				</p>
+			</div>
+
+			<div class="info-block">
+				<h2 class="info-block-title">Código de Vestimenta</h2>
+				<p class="info-block-text">
+					<strong>Etiqueta</strong><br />
+					Se ruega puntualidad alemana
+				</p>
+			</div>
+		</section>
+	</main>
 </section>

@@ -43,6 +43,30 @@ mvn spring-boot:run
 
 Disponible en: http://localhost:8080
 
+Opcion 3 (con SMTP de Gmail cargado desde `.env.local`):
+
+```powershell
+npm run start:back:mail
+```
+
+## Configuracion de correo para confirmaciones
+
+Las confirmaciones se envian desde el backend a la cuenta hardcodeada en `ConfirmacionService`. Para que lleguen de verdad por Gmail, arranca la API con estas variables de entorno:
+
+```powershell
+$env:SMTP_HOST = "smtp.gmail.com"
+$env:SMTP_PORT = "587"
+$env:SMTP_USERNAME = "manolito6989@gmail.com"
+$env:SMTP_PASSWORD = "TU_APP_PASSWORD_DE_GMAIL"
+$env:SMTP_AUTH = "true"
+$env:SMTP_STARTTLS = "true"
+```
+
+Notas:
+- En Gmail normalmente necesitas una contrasena de aplicacion, no tu contrasena normal.
+- Si cambias estas variables, reinicia el backend.
+- Si el SMTP falla, la confirmacion se guarda igual, pero el correo no se enviara.
+
 ## Scripts npm utiles
 
 - npm run start:front
@@ -102,7 +126,8 @@ foreach ($p in $ports) {
 ## Rutas frontend actuales
 
 - /
-- /invitacion
+- /invitados
+- /esta-invitado
 - /detalles
 - /confirmacion
 
@@ -110,6 +135,7 @@ foreach ($p in $ports) {
 
 - GET /api/detalles-boda
 - POST /api/confirmacion
+- GET /api/usuarios/buscar-invitado
 - GET /api/usuarios
 - GET /api/usuarios/{id}
 - POST /api/usuarios

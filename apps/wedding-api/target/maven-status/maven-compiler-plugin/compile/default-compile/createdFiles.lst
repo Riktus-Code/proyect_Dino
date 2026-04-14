@@ -9,6 +9,5 @@ com\wedding\api\repository\UsuarioRepository.class
 com\wedding\api\WeddingApiApplication.class
 com\wedding\api\config\AdminSeederConfig.class
 com\wedding\api\service\AdminAuthService$SessionData.class
-com\wedding\api\controller\UsuarioController.class
 com\wedding\api\service\AdminAuthService.class
 com\wedding\api\controller\WeddingController.class

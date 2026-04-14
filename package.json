@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:front": "nx serve wedding-web",
     "start:back": "nx serve wedding-api",
-    "start:back:jdk25": "set \"JAVA_HOME=C:\\Users\\elman\\.jdks\\openjdk-25\" && set \"Path=%JAVA_HOME%\\bin;D:\\Apache maven\\apache-maven-3.9.14\\bin;%Path%\" && nx serve wedding-api"
+    "start:back:jdk25": "set \"JAVA_HOME=C:\\Users\\elman\\.jdks\\openjdk-25\" && set \"Path=%JAVA_HOME%\\bin;D:\\Apache maven\\apache-maven-3.9.14\\bin;%Path%\" && nx serve wedding-api",
+    "start:back:mail": "powershell -ExecutionPolicy Bypass -File scripts/start-backend-mail.ps1"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +31,7 @@
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
+    "@types/leaflet": "^1.9.8",
     "@typescript-eslint/utils": "^8.40.0",
     "angular-eslint": "^21.2.0",
     "eslint": "^9.8.0",
@@ -48,6 +50,8 @@
     "@angular/forms": "~21.2.0",
     "@angular/platform-browser": "~21.2.0",
     "@angular/router": "~21.2.0",
-    "rxjs": "~7.8.0"
+    "leaflet": "^1.9.4",
+    "rxjs": "~7.8.0",
+    "sweetalert2": "^11.26.24"
   }
 }

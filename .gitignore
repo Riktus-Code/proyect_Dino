@@ -4,3 +4,4 @@
 .nx/workspace-data
 .angular
 node_modules
+.env.local

@@ -119,9 +119,77 @@ button {
 }
 
 .home-content {
+  width: 100%;
+  padding: 0 0 48px;
+}
+
+.hero-image-wrap {
+  width: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  height: 52vh;
+  min-height: 280px;
+  display: block;
+  object-fit: cover;
+}
+
+.home-info {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 32px var(--content-side-padding);
+  padding: 34px var(--content-side-padding) 0;
+  text-align: center;
+}
+
+.couple-title {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.3rem);
+  color: #17354d;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 5vw, 28px);
+  margin: 24px 0 0;
+  flex-wrap: wrap;
+}
+
+.countdown-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.countdown-number {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #1b6aa3;
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+  font-weight: 600;
+  color: #4a6882;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.save-date {
+  margin: 18px 0 0;
+  letter-spacing: 0.2em;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #4a6882;
+}
+
+.event-date {
+  margin: 10px 0 0;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: #163047;
 }
 
 .error-text {
@@ -136,5 +204,10 @@ button {
   .header-inner {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hero-image {
+    height: 38vh;
+    min-height: 220px;
   }
 }

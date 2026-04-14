@@ -16,7 +16,7 @@ export interface UsuarioAdmin {
   providedIn: 'root',
 })
 export class UsuarioAdminService {
-  private readonly apiUrl = 'http://localhost:8080/api/usuarios';
+  private readonly apiUrl = this.resolveApiBaseUrl();
 
   constructor(
     private readonly http: HttpClient,
@@ -58,5 +58,14 @@ export class UsuarioAdminService {
     return new HttpHeaders({
       'X-Admin-Token': token,
     });
+  }
+
+  private resolveApiBaseUrl(): string {
+    const configuredUrl = (globalThis as { __WEDDING_API_URL__?: string }).__WEDDING_API_URL__;
+    if (configuredUrl) {
+      return `${configuredUrl.replace(/\/$/, '')}/usuarios`;
+    }
+
+    return 'http://localhost:8080/api/usuarios';
   }
 }
