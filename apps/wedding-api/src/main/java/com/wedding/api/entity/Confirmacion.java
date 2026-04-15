@@ -10,11 +10,21 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "confirmacion", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"usuario_id"})
 })
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Confirmacion {
 
     @Id
@@ -23,6 +33,8 @@ public class Confirmacion {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id", nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Usuario usuario;
 
     @Column(nullable = false)
@@ -33,47 +45,4 @@ public class Confirmacion {
 
     @Column(nullable = false)
     private LocalDateTime fechaConfirmacion;
-
-    public Confirmacion() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public boolean isAcompanante() {
-        return acompanante;
-    }
-
-    public void setAcompanante(boolean acompanante) {
-        this.acompanante = acompanante;
-    }
-
-    public String getAlergias() {
-        return alergias;
-    }
-
-    public void setAlergias(String alergias) {
-        this.alergias = alergias;
-    }
-
-    public LocalDateTime getFechaConfirmacion() {
-        return fechaConfirmacion;
-    }
-
-    public void setFechaConfirmacion(LocalDateTime fechaConfirmacion) {
-        this.fechaConfirmacion = fechaConfirmacion;
-    }
 }

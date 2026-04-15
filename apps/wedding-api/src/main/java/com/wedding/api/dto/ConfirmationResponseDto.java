@@ -1,20 +1,16 @@
 package com.wedding.api.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ConfirmationResponseDto {
 
-    private final boolean confirmada;
-    private final String mensaje;
-
-    public ConfirmationResponseDto(boolean confirmada, String mensaje) {
-        this.confirmada = confirmada;
-        this.mensaje = mensaje;
-    }
-
-    public boolean isConfirmada() {
-        return confirmada;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
+    private boolean confirmada;
+    private String mensaje;
 }
