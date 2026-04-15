@@ -7,7 +7,6 @@ import com.wedding.api.repository.UsuarioRepository;
 import com.wedding.api.service.AdminAuthService;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"}, methods = {
-        org.springframework.web.bind.annotation.RequestMethod.POST,
-        org.springframework.web.bind.annotation.RequestMethod.OPTIONS
-})
 public class AuthController {
 
     private final UsuarioRepository usuarioRepository;

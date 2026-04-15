@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "*", methods = {
-        org.springframework.web.bind.annotation.RequestMethod.GET,
-        org.springframework.web.bind.annotation.RequestMethod.POST,
-        org.springframework.web.bind.annotation.RequestMethod.PUT,
-        org.springframework.web.bind.annotation.RequestMethod.DELETE,
-        org.springframework.web.bind.annotation.RequestMethod.OPTIONS
-})
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;

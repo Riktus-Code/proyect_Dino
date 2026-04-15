@@ -144,6 +144,18 @@ foreach ($p in $ports) {
 
 CORS habilitado para origen: http://localhost:4200. En la API de usuarios se permiten GET, POST, PUT, DELETE y OPTIONS.
 
+## CORS para despliegue
+
+La API usa una configuración global en [apps/wedding-api/src/main/java/com/wedding/api/config/WebConfig.java](apps/wedding-api/src/main/java/com/wedding/api/config/WebConfig.java).
+
+Para desplegar frontend y backend en dominios distintos, define la variable de entorno `app.cors.allowed-origins` con una lista separada por comas. Ejemplo:
+
+```bash
+app.cors.allowed-origins=https://tu-frontend.onrender.com,https://otro-dominio.com
+```
+
+Si no defines nada, queda permitido `*`.
+
 ## Avance de implementacion (30-03-2026)
 
 - Se creo/ajusto la entidad JPA `Usuario` en `apps/wedding-api/src/main/java/com/wedding/api/entity/Usuario.java`.
@@ -160,3 +172,5 @@ CORS habilitado para origen: http://localhost:4200. En la API de usuarios se per
 - Se implemento CRUD completo para usuarios en `apps/wedding-api/src/main/java/com/wedding/api/controller/UsuarioController.java`.
 - Endpoints habilitados: listar, obtener por id, crear, actualizar y eliminar.
 - CORS para usuarios habilitado desde `http://localhost:4200` con metodos GET, POST, PUT, DELETE y OPTIONS.
+
+- URL de la base de datos en neon: jdbc:postgresql://neondb_owner:npg_rPQFk2ieCy5t@ep-rapid-lake-al83cxvn.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
