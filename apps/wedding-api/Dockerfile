@@ -4,11 +4,11 @@ FROM maven:3.9.9-eclipse-temurin-17 AS builder
 WORKDIR /workspace
 
 # Cache dependencies first
-COPY apps/wedding-api/pom.xml ./pom.xml
+COPY pom.xml ./pom.xml
 RUN mvn -B -ntp -DskipTests dependency:go-offline
 
 # Copy source and build
-COPY apps/wedding-api/src ./src
+COPY src ./src
 RUN mvn -B -ntp -DskipTests clean package && \
     JAR_FILE=$(ls target/*.jar | grep -v "original" | head -n 1) && \
     cp "$JAR_FILE" target/app.jar
