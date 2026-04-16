@@ -57,6 +57,6 @@ export class AdminAuthService {
       return `${configuredUrl.replace(/\/$/, '')}/auth`;
     }
 
-    return 'http://localhost:8080/api/auth';
+    return 'https://proyect-dino.onrender.com/api/auth';
   }
 }

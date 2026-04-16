@@ -52,6 +52,6 @@ export class WeddingApiService {
       return configuredUrl.replace(/\/$/, '');
     }
 
-    return 'http://localhost:8080/api';
+    return 'https://proyect-dino.onrender.com/api';
   }
 }

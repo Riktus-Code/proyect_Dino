@@ -66,6 +66,6 @@ export class UsuarioAdminService {
       return `${configuredUrl.replace(/\/$/, '')}/usuarios`;
     }
 
-    return 'http://localhost:8080/api/usuarios';
+    return 'https://proyect-dino.onrender.com/api/usuarios';
   }
 }
