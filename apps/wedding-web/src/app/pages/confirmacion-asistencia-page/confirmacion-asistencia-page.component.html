@@ -41,10 +41,31 @@
 				<label for="alergias">Alergias / intolerancias</label>
 				<textarea id="alergias" name="alergias" rows="4" [(ngModel)]="alergias" placeholder="Escribe aquí si existe alguna alergia o intolerancia"></textarea>
 
-				<label class="checkbox-row">
-					<input id="acompanante" name="acompanante" type="checkbox" [(ngModel)]="acompanante" />
-					<span>¿Irás acompañado?</span>
-				</label>
+				<div class="acompanante-group" role="group" aria-labelledby="acompanante-question">
+					<p id="acompanante-question" class="group-label">¿Irás acompañado? <span class="required">*</span></p>
+
+					<label class="checkbox-row" for="acompanante-si">
+						<input
+							id="acompanante-si"
+							type="checkbox"
+							name="acompananteSi"
+							[checked]="acompanante === true"
+							(change)="seleccionarAcompanante(true, $event)"
+						/>
+						<span>Sí</span>
+					</label>
+
+					<label class="checkbox-row" for="acompanante-no">
+						<input
+							id="acompanante-no"
+							type="checkbox"
+							name="acompananteNo"
+							[checked]="acompanante === false"
+							(change)="seleccionarAcompanante(false, $event)"
+						/>
+						<span>No</span>
+					</label>
+				</div>
 
 				<p class="error-message" *ngIf="error">{{ error }}</p>
 				<p class="success-message" *ngIf="mensajeExito">{{ mensajeExito }}</p>

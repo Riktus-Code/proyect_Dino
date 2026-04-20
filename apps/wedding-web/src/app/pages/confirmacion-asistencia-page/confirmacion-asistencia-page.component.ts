@@ -15,7 +15,7 @@ export class ConfirmacionAsistenciaPageComponent {
   nombre = '';
   apellido = '';
   alergias = '';
-  acompanante = false;
+  acompanante: boolean | null = null;
   enviando = false;
   error = '';
   mensajeExito = '';
@@ -27,6 +27,11 @@ export class ConfirmacionAsistenciaPageComponent {
 
   logoutDesdeHeader(): void {
     this.adminAuthService.logout();
+  }
+
+  seleccionarAcompanante(valor: boolean, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.acompanante = input.checked ? valor : null;
   }
 
   async confirmarAsistencia(): Promise<void> {
@@ -41,11 +46,18 @@ export class ConfirmacionAsistenciaPageComponent {
       return;
     }
 
+    if (this.acompanante === null) {
+      this.error = 'Debes marcar si iras acompanado (Si o No).';
+      return;
+    }
+
+    const acompananteSeleccionado = this.acompanante;
+
     const request: ConfirmationRequest = {
       nombre: nombreLimpio,
       apellido: apellidoLimpio,
       alergias: this.alergias.trim(),
-      acompanante: this.acompanante,
+      acompanante: acompananteSeleccionado,
     };
 
     this.enviando = true;
@@ -58,7 +70,7 @@ export class ConfirmacionAsistenciaPageComponent {
       }
 
       this.mensajeExito = response.mensaje;
-      await Swal.fire({
+      void Swal.fire({
         icon: 'success',
         title: 'Confirmación registrada',
         text: response.mensaje,
@@ -79,7 +91,7 @@ export class ConfirmacionAsistenciaPageComponent {
       const message = httpError.error?.mensaje as string | undefined;
 
       if (httpError.status === 409) {
-        await Swal.fire({
+        void Swal.fire({
           icon: 'warning',
           title: 'Ya confirmado',
           text: message ?? 'Ya existe una confirmación previa para este usuario.',
@@ -100,7 +112,7 @@ export class ConfirmacionAsistenciaPageComponent {
       }
 
       if (httpError.status === 404) {
-        await Swal.fire({
+        void Swal.fire({
           icon: 'info',
           title: 'Usuario no invitado',
           text: message ?? 'No hemos encontrado tus datos en la lista de invitados.',
