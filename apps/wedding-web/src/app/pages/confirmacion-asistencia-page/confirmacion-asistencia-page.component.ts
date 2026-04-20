@@ -95,6 +95,15 @@ export class ConfirmacionAsistenciaPageComponent {
     } catch (error) {
       if (error instanceof TimeoutError) {
         this.error = 'La solicitud está tardando demasiado. Inténtalo de nuevo en unos segundos.';
+        await Swal.fire({
+          icon: 'error',
+          title: 'Tiempo de espera agotado',
+          text: this.error,
+          confirmButtonText: 'Entendido',
+          confirmButtonColor: '#1b6aa3',
+          background: '#ffffff',
+          color: '#163047',
+        });
         return;
       }
 
@@ -144,6 +153,15 @@ export class ConfirmacionAsistenciaPageComponent {
       }
 
       this.error = 'No se ha podido guardar la confirmación. Inténtalo más tarde.';
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: this.error,
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#1b6aa3',
+        background: '#ffffff',
+        color: '#163047',
+      });
     } finally {
       this.enviando = false;
     }
