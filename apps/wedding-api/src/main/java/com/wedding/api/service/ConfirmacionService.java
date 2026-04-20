@@ -6,6 +6,7 @@ import com.wedding.api.entity.Usuario;
 import com.wedding.api.repository.ConfirmacionRepository;
 import com.wedding.api.repository.UsuarioRepository;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
@@ -61,13 +62,17 @@ public class ConfirmacionService {
         confirmacion.setFechaConfirmacion(LocalDateTime.now());
         confirmacionRepository.save(confirmacion);
 
-        enviarCorreoConfirmacion(usuario, confirmacion);
+        enviarCorreoConfirmacionAsync(usuario, confirmacion);
 
         String mensajeRespuesta = Boolean.TRUE.equals(acompanante)
                 ? "Confirmación guardada. El usuario asistirá acompañado."
                 : "Confirmación guardada. El usuario asistirá sin acompañante.";
 
         return new ConfirmationResponseDto(true, mensajeRespuesta);
+    }
+
+    private void enviarCorreoConfirmacionAsync(Usuario usuario, Confirmacion confirmacion) {
+        CompletableFuture.runAsync(() -> enviarCorreoConfirmacion(usuario, confirmacion));
     }
 
     private void enviarCorreoConfirmacion(Usuario usuario, Confirmacion confirmacion) {

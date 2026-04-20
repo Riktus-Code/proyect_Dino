@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, TimeoutError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AdminAuthService } from '../../services/admin-auth.service';
 import { ConfirmationRequest, WeddingApiService } from '../../services/wedding-api.service';
@@ -70,7 +70,7 @@ export class ConfirmacionAsistenciaPageComponent {
       }
 
       this.mensajeExito = response.mensaje;
-      void Swal.fire({
+      await Swal.fire({
         icon: 'success',
         title: 'Confirmación registrada',
         text: response.mensaje,
@@ -86,7 +86,18 @@ export class ConfirmacionAsistenciaPageComponent {
           confirmButton: 'wedding-swal-confirm',
         },
       });
+
+      this.nombre = '';
+      this.apellido = '';
+      this.alergias = '';
+      this.acompanante = null;
+      window.location.reload();
     } catch (error) {
+      if (error instanceof TimeoutError) {
+        this.error = 'La solicitud está tardando demasiado. Inténtalo de nuevo en unos segundos.';
+        return;
+      }
+
       const httpError = error as HttpErrorResponse;
       const message = httpError.error?.mensaje as string | undefined;
 

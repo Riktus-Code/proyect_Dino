@@ -33,7 +33,7 @@ export class WeddingApiService {
   }
 
   enviarConfirmacionAsistencia(request: ConfirmationRequest): Observable<ConfirmationResponse> {
-    return this.http.post<ConfirmationResponse>(`${this.apiBaseUrl}/confirmacion`, request).pipe(timeout(10000));
+    return this.http.post<ConfirmationResponse>(`${this.apiBaseUrl}/confirmacion`, request).pipe(timeout(20000));
   }
 
   buscarInvitado(nombre: string, apellido: string): Observable<InvitadoLookupResponse> {
