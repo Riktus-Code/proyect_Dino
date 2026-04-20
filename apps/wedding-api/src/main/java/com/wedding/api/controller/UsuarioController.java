@@ -49,7 +49,7 @@ public class UsuarioController {
         }
 
         Optional<Usuario> usuario = usuarioRepository
-                .findFirstByNombreIgnoreCaseAndApellidoIgnoreCase(nombreLimpio, apellidoLimpio);
+            .findInvitadoByNombreApellido(nombreLimpio, apellidoLimpio);
 
         InvitadoLookupResponseDto response = usuario
                 .map(u -> new InvitadoLookupResponseDto(true, u.getNombre(), u.getApellido()))

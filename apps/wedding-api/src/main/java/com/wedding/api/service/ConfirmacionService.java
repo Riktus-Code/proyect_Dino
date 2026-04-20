@@ -35,7 +35,7 @@ public class ConfirmacionService {
         String apellidoLimpio = limpiarTexto(apellido);
 
         Usuario usuario = usuarioRepository
-                .findFirstByNombreIgnoreCaseAndApellidoIgnoreCase(nombreLimpio, apellidoLimpio)
+            .findInvitadoByNombreApellido(nombreLimpio, apellidoLimpio)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         if (confirmacionRepository.existsByUsuarioId(usuario.getId())) {
