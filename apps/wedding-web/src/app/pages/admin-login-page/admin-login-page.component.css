@@ -2,47 +2,79 @@
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #f3f8fc 0%, #dfeaf7 100%);
+  background: transparent;
   padding: 20px;
 }
 
 .card {
   width: min(420px, 100%);
-  background: #ffffff;
-  border: 1px solid #d9e6f3;
-  border-radius: 14px;
-  padding: 22px;
-  box-shadow: 0 10px 25px rgba(17, 40, 66, 0.08);
+  background: linear-gradient(180deg, rgba(255, 253, 247, 0.98) 0%, rgba(248, 241, 230, 0.98) 100%);
+  border: 1px solid #e4d8c3;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 22px 42px rgba(102, 81, 50, 0.18);
+  animation: fadeUp 420ms ease both;
 }
 
 h1 {
   margin-top: 0;
-  color: #14314f;
+  color: #34291f;
+  font-size: clamp(2rem, 4.2vw, 2.8rem);
+  font-weight: 600;
+}
+
+p {
+  color: #5d5347;
 }
 
 form {
   display: grid;
-  gap: 10px;
+  gap: 11px;
 }
 
 input,
 button {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #c4cfdb;
+  padding: 11px 12px;
+  border-radius: 12px;
 }
 
 button {
-  border: none;
-  background: #1a669e;
-  color: #fff;
-  cursor: pointer;
+  border-radius: 999px;
 }
 
 .error {
-  background: #fdecec;
-  color: #7f1d1d;
+  background: #fff0ea;
+  color: #842b1d;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 10px;
+  border: 1px solid #efcabf;
+}
+
+@media (max-width: 768px) {
+  .admin-login-page {
+    padding: 16px;
+  }
+
+  .card {
+    width: min(460px, 100%);
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-login-page {
+    padding: 12px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 18px 14px;
+  }
+
+  button,
+  input {
+    width: 100%;
+  }
 }

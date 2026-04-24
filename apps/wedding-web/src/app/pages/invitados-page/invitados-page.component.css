@@ -1,204 +1,105 @@
-.invitation-shell {
-  min-height: 100vh;
-  background: linear-gradient(120deg, #f5f9fc 0%, #e6eef7 100%);
-  color: #163047;
-}
-
-.top-header {
-  width: 100%;
-  border-bottom: 1px solid #d5e1ee;
-  background: #ffffffcc;
-  backdrop-filter: blur(4px);
-}
-
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-}
-
-.main-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.main-nav a {
-  text-decoration: none;
-  color: #1d4d75;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-.main-nav a:hover {
-  background: #e8f1fb;
-}
-
-.active-link {
-  background: #1b6aa3;
-  color: #fff !important;
-}
-
-.header-login {
-  display: flex;
-}
-
-.login-icon-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  border: 1px solid #c8d4e1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  background: #ffffff;
-}
-
-.login-icon-btn:hover {
-  background: #eff5fb;
-}
-
-.icon-user {
-  width: 16px;
-  height: 16px;
-  position: relative;
-}
-
-.icon-user::before,
-.icon-user::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 1.6px solid #1d4d75;
-  border-radius: 999px;
-}
-
-.icon-user::before {
-  top: 0;
-  width: 7px;
-  height: 7px;
-  background: #ffffff;
-}
-
-.icon-user::after {
-  bottom: 0;
-  width: 13px;
-  height: 8px;
-  border-top: none;
-}
-
-button {
-  border: 1px solid #c8d4e1;
-  border-radius: 8px;
-  padding: 8px 10px;
-  background: #1b6aa3;
-  color: #fff;
-  cursor: pointer;
-}
-
-.logged-box {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.logged-box span {
-  font-weight: 600;
-  color: #1d4d75;
-}
-
 .invitation-content {
   width: 100%;
-  max-width: var(--content-max-width);
+  max-width: 940px;
   margin: 0 auto;
-  padding: 56px var(--content-side-padding) 64px;
+  padding: 44px var(--content-side-padding) 64px;
+  animation: fadeUp 420ms ease both;
 }
 
 .lookup-card {
-  max-width: 680px;
+  max-width: 730px;
   margin: 0 auto;
-  background: #ffffff;
-  border: 1px solid #dbe6f2;
-  border-radius: 22px;
-  box-shadow: 0 20px 40px rgba(22, 48, 71, 0.08);
-  padding: 32px;
+  background: linear-gradient(180deg, rgba(255, 253, 247, 0.98) 0%, rgba(248, 241, 230, 0.98) 100%);
+  border: 1px solid #e4d8c3;
+  border-radius: 24px;
+  box-shadow: 0 22px 42px rgba(102, 81, 50, 0.18);
+  padding: 34px;
 }
 
 .eyebrow {
   margin: 0 0 10px;
-  color: #2a688f;
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  color: #8a7551;
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 h1 {
   margin: 0 0 12px;
-  font-size: clamp(1.7rem, 2.8vw, 2.2rem);
-  color: #163047;
+  font-size: clamp(2rem, 4.6vw, 3rem);
+  color: #34291f;
+  font-weight: 600;
 }
 
 .intro-copy {
   margin: 0 0 20px;
-  color: #34566f;
-  line-height: 1.55;
+  color: #5d5347;
+  line-height: 1.6;
+  font-size: 1.01rem;
 }
 
 .lookup-form {
   display: grid;
-  gap: 10px;
+  gap: 11px;
 }
 
 .lookup-form label {
   font-weight: 600;
-  color: #1f4663;
+  color: #4f4131;
 }
 
 .lookup-form input {
-  border: 1px solid #c8d8e8;
-  border-radius: 10px;
-  padding: 11px 12px;
-  font-size: 1rem;
-  color: #163047;
-  background: #fbfdff;
+  border-radius: 12px;
+  padding: 12px 13px;
+  font-size: 0.98rem;
+  color: #342e27;
+  background: #fffcf5;
 }
 
 .lookup-form input:focus {
-  outline: 2px solid #71a5cc;
-  border-color: #71a5cc;
+  outline: none;
 }
 
 .lookup-form button {
-  margin-top: 8px;
-  min-height: 46px;
+  margin-top: 10px;
+  min-height: 48px;
   font-weight: 600;
 }
 
 .lookup-form button:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
+  opacity: 0.74;
 }
 
 .error-message {
   margin: 6px 0 2px;
-  color: #a33131;
+  color: #8e3524;
   font-weight: 600;
 }
 
 @media (max-width: 900px) {
-  .header-inner {
-    flex-direction: column;
-    align-items: stretch;
+  .lookup-card {
+    padding: 22px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .invitation-content {
+    padding: 28px 14px 44px;
   }
 
   .lookup-card {
-    padding: 24px;
+    max-width: 100%;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .invitation-content {
+    padding: 18px 12px 34px;
+  }
+
+  .lookup-form button {
+    width: 100%;
   }
 }

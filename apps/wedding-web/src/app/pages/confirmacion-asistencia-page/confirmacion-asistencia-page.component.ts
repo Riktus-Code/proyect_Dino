@@ -35,6 +35,10 @@ export class ConfirmacionAsistenciaPageComponent {
   }
 
   async confirmarAsistencia(): Promise<void> {
+    if (this.enviando) {
+      return;
+    }
+
     this.error = '';
     this.mensajeExito = '';
 
@@ -70,6 +74,7 @@ export class ConfirmacionAsistenciaPageComponent {
       }
 
       this.mensajeExito = response.mensaje;
+      this.enviando = false;
       await Swal.fire({
         icon: 'success',
         title: 'Confirmación registrada',
@@ -93,8 +98,12 @@ export class ConfirmacionAsistenciaPageComponent {
       this.acompanante = null;
       window.location.reload();
     } catch (error) {
-      if (error instanceof TimeoutError) {
+      const timeoutError = error instanceof TimeoutError
+        || (typeof error === 'object' && error !== null && 'name' in error && (error as { name?: string }).name === 'TimeoutError');
+
+      if (timeoutError) {
         this.error = 'La solicitud está tardando demasiado. Inténtalo de nuevo en unos segundos.';
+        this.enviando = false;
         await Swal.fire({
           icon: 'error',
           title: 'Tiempo de espera agotado',
@@ -109,6 +118,21 @@ export class ConfirmacionAsistenciaPageComponent {
 
       const httpError = error as HttpErrorResponse;
       const message = httpError.error?.mensaje as string | undefined;
+
+      if (httpError.status === 0) {
+        this.error = 'No hay conexión con el servidor. Comprueba que el backend esté activo en local.';
+        this.enviando = false;
+        await Swal.fire({
+          icon: 'error',
+          title: 'Sin conexión con backend',
+          text: this.error,
+          confirmButtonText: 'Entendido',
+          confirmButtonColor: '#1b6aa3',
+          background: '#ffffff',
+          color: '#163047',
+        });
+        return;
+      }
 
       if (httpError.status === 409) {
         void Swal.fire({
@@ -153,6 +177,7 @@ export class ConfirmacionAsistenciaPageComponent {
       }
 
       this.error = 'No se ha podido guardar la confirmación. Inténtalo más tarde.';
+      this.enviando = false;
       await Swal.fire({
         icon: 'error',
         title: 'Error al guardar',

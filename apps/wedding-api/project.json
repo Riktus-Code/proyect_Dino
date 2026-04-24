@@ -8,21 +8,21 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/wedding-api",
-        "command": "mvn spring-boot:run"
+        "command": "powershell -ExecutionPolicy Bypass -File ..\\..\\scripts\\start-backend-local.ps1"
       }
     },
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/wedding-api",
-        "command": "mvn clean package"
+        "command": "cmd /c docker run --rm --name wedding-api-build -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn clean package"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/wedding-api",
-        "command": "mvn test"
+        "command": "cmd /c docker run --rm --name wedding-api-test -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn test"
       }
     }
   },

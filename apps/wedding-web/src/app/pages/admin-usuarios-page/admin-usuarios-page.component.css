@@ -1,16 +1,17 @@
 .admin-page {
-  max-width: 1000px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 24px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 30px 24px 50px;
+  animation: fadeUp 420ms ease both;
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid #dfe6ee;
-  border-radius: 12px;
-  padding: 16px;
+  background: linear-gradient(180deg, rgba(255, 253, 247, 0.98) 0%, rgba(248, 241, 230, 0.98) 100%);
+  border: 1px solid #e4d8c3;
+  border-radius: 18px;
+  padding: 18px;
   margin-bottom: 16px;
+  box-shadow: 0 12px 24px rgba(95, 76, 46, 0.14);
 }
 
 .card-row {
@@ -20,7 +21,12 @@
 
 h1,
 h2 {
-  color: #17324d;
+  color: #392d1f;
+}
+
+h1 {
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-weight: 600;
 }
 
 form {
@@ -44,56 +50,42 @@ form {
 input,
 select,
 button {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #c5cfda;
+  padding: 11px 12px;
+  border-radius: 12px;
 }
 
 button {
-  background: #1c6da8;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
+  border-radius: 999px;
 }
 
 button:hover {
-  background: #175a8a;
+  background: linear-gradient(145deg, #645235, #443824);
 }
 
 .messages {
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 16px;
 }
 
 .success {
-  background: #e9f9ef;
-  color: #216e3a;
+  background: #eef9f1;
+  color: #245c36;
+  border: 1px solid #cae7d4;
 }
 
 .error {
-  background: #fdeaea;
-  color: #8a1f1f;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border-bottom: 1px solid #e7edf5;
-  text-align: left;
-  padding: 8px;
+  background: #fff0ea;
+  color: #842b1d;
+  border: 1px solid #efcabf;
 }
 
 .result-box {
   margin-top: 10px;
-  background: #f6f9fc;
-  border: 1px solid #dce6f2;
+  background: rgba(255, 253, 247, 0.88);
+  border: 1px solid #e6dac7;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 @media (max-width: 768px) {
@@ -105,5 +97,31 @@ td {
   .inline-controls {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .admin-page {
+    padding: 20px 14px 36px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-page {
+    padding: 16px 12px 28px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .messages {
+    margin-bottom: 12px;
   }
 }

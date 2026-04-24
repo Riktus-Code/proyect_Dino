@@ -47,11 +47,6 @@ export class WeddingApiService {
   }
 
   private resolveApiBaseUrl(): string {
-    const configuredUrl = (globalThis as { __WEDDING_API_URL__?: string }).__WEDDING_API_URL__;
-    if (configuredUrl) {
-      return configuredUrl.replace(/\/$/, '');
-    }
-
-    return 'https://proyect-dino.onrender.com/api';
+    return 'http://localhost:8080/api';
   }
 }

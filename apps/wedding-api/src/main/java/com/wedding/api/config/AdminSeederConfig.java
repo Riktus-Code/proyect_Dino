@@ -32,6 +32,26 @@ public class AdminSeederConfig {
                 admin.setRol("ADMIN");
                 usuarioRepository.save(admin);
             }
+
+            String userCorreo = "juan.perez@wedding.local";
+            Optional<Usuario> existingUserByCorreo = usuarioRepository.findByCorreo(userCorreo);
+
+            if (existingUserByCorreo.isEmpty()) {
+                Usuario user = new Usuario();
+                user.setNombre("Juan");
+                user.setApellido("Perez");
+                user.setCorreo(userCorreo);
+                user.setPassword("User123*");
+                user.setRol("USER");
+                usuarioRepository.save(user);
+            } else {
+                Usuario user = existingUserByCorreo.get();
+                user.setNombre("Juan");
+                user.setApellido("Perez");
+                user.setPassword("User123*");
+                user.setRol("USER");
+                usuarioRepository.save(user);
+            }
         };
     }
 }

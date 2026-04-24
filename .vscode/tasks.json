@@ -1,0 +1,1169 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "start-backend-local",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:back"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-local",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:front"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-backend-jdk25",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:back:jdk25"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-no-interactive",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_INTERACTIVE=false&& set CI=true&& npm run start:front"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "seed-local-users-postgres",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"exec",
+				"mi-postgres",
+				"psql",
+				"-U",
+				"miusuario",
+				"-d",
+				"mibdd",
+				"-c",
+				"INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Admin','Wedding','admin@wedding.local','Admin123*','ADMIN') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Juan','Perez','juan.perez@wedding.local','User123*','USER') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; SELECT id, nombre, apellido, correo, rol FROM usuario ORDER BY id;"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-angular-cli",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"ng",
+				"serve",
+				"wedding-web",
+				"--host",
+				"0.0.0.0",
+				"--port",
+				"4200",
+				"--proxy-config",
+				"apps/wedding-web/proxy.conf.json"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-postgres-container",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"start",
+				"mi-postgres"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "seed-users-postgres-psql",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"exec",
+				"mi-postgres",
+				"psql",
+				"-U",
+				"miusuario",
+				"-d",
+				"mibdd",
+				"-c",
+				"CREATE TABLE IF NOT EXISTS usuario (id BIGSERIAL PRIMARY KEY, nombre VARCHAR(255) NOT NULL, apellido VARCHAR(255) NOT NULL, correo VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255), rol VARCHAR(255)); INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Admin','Wedding','admin@wedding.local','Admin123*','ADMIN') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Juan','Perez','juan.perez@wedding.local','User123*','USER') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; SELECT id, nombre, apellido, correo, rol FROM usuario ORDER BY id;"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-nx-no-daemon",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_DAEMON=false&& set NX_INTERACTIVE=false&& set CI=true&& npx nx serve wedding-web"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "docker-status-postgres",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"-a",
+				"--filter",
+				"name=mi-postgres",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "docker-logs-postgres",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"logs",
+				"--tail",
+				"80",
+				"mi-postgres"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "run-postgres16-local",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"run",
+				"-d",
+				"--name",
+				"mi-postgres16",
+				"-e",
+				"POSTGRES_USER=miusuario",
+				"-e",
+				"POSTGRES_PASSWORD=mipassword",
+				"-e",
+				"POSTGRES_DB=mibdd",
+				"-p",
+				"5432:5432",
+				"-v",
+				"postgres16-data:/var/lib/postgresql/data",
+				"postgres:16"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "seed-users-postgres16",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"exec",
+				"mi-postgres16",
+				"psql",
+				"-U",
+				"miusuario",
+				"-d",
+				"mibdd",
+				"-c",
+				"CREATE TABLE IF NOT EXISTS usuario (id BIGSERIAL PRIMARY KEY, nombre VARCHAR(255) NOT NULL, apellido VARCHAR(255) NOT NULL, correo VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255), rol VARCHAR(255)); INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Admin','Wedding','admin@wedding.local','Admin123*','ADMIN') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Juan','Perez','juan.perez@wedding.local','User123*','USER') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; SELECT id, nombre, apellido, correo, rol FROM usuario ORDER BY id;"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "clean-nx-cache",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"if exist .nx rmdir /s /q .nx && echo nx-cache-cleaned"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "seed-users-postgres16-escaped",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker exec mi-postgres16 psql -U miusuario -d mibdd -c \"CREATE TABLE IF NOT EXISTS usuario (id BIGSERIAL PRIMARY KEY, nombre VARCHAR(255) NOT NULL, apellido VARCHAR(255) NOT NULL, correo VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255), rol VARCHAR(255)); INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Admin','Wedding','admin@wedding.local','Admin123*','ADMIN') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; INSERT INTO usuario (nombre, apellido, correo, password, rol) VALUES ('Juan','Perez','juan.perez@wedding.local','User123*','USER') ON CONFLICT (correo) DO UPDATE SET nombre=EXCLUDED.nombre, apellido=EXCLUDED.apellido, password=EXCLUDED.password, rol=EXCLUDED.rol; SELECT id, nombre, apellido, correo, rol FROM usuario ORDER BY id;\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "nx-reset",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_DAEMON=false&& npx nx reset"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-backend-docker-maven",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker run --rm --name wedding-api-local -p 8080:8080 -e DB_URL=jdbc:postgresql://host.docker.internal:5432/mibdd -e DB_USERN=miusuario -e DB_PASSWORD=mipassword -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "seed-normal-user-via-api",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$loginBody = @{ nombre='Admin'; password='Admin123*' } | ConvertTo-Json; $loginResp = Invoke-RestMethod -Method Post -Uri 'http://localhost:8080/api/auth/admin/login' -ContentType 'application/json' -Body $loginBody; $token = $loginResp.token; $userBody = @{ nombre='Juan'; apellido='Perez'; correo='juan.perez@wedding.local'; password='User123*'; rol='USER' } | ConvertTo-Json; Invoke-RestMethod -Method Post -Uri 'http://localhost:8080/api/usuarios' -Headers @{ 'X-Admin-Token' = $token } -ContentType 'application/json' -Body $userBody | ConvertTo-Json -Depth 5"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "repair-nx-local",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"taskkill /F /IM node.exe >nul 2>nul & if exist .nx rmdir /s /q .nx & npm install"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "restart-backend-docker",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker rm -f wedding-api-local >nul 2>nul & docker run --rm --name wedding-api-local -p 8080:8080 -e DB_URL=jdbc:postgresql://host.docker.internal:5432/mibdd -e DB_USERN=miusuario -e DB_PASSWORD=mipassword -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-after-repair",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_DAEMON=false&& set NX_INTERACTIVE=false&& set CI=true&& npm run start:front"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-direct-nxjs",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"node_modules/nx/bin/nx.js",
+				"serve",
+				"wedding-web"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-users-api",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -X POST http://localhost:8080/api/auth/admin/login -H \"Content-Type: application/json\" -d \"{\\\"nombre\\\":\\\"Admin\\\",\\\"password\\\":\\\"Admin123*\\\"}\" > admin_login_tmp.json && powershell -NoProfile -Command \"$token=(Get-Content admin_login_tmp.json | ConvertFrom-Json).token; Invoke-RestMethod -Method Get -Uri 'http://localhost:8080/api/usuarios' -Headers @{ 'X-Admin-Token'=$token } | ConvertTo-Json -Depth 5\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "docker-ps-check",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-local-ports",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200,8080,5432 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "verify-users-db-direct",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"exec",
+				"mi-postgres16",
+				"psql",
+				"-U",
+				"miusuario",
+				"-d",
+				"mibdd",
+				"-c",
+				"SELECT id, nombre, apellido, correo, rol FROM usuario ORDER BY id;"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "test-confirmacion-api-local",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$body = @{ nombre='Juan'; apellido='Perez'; alergias='Prueba local'; acompanante=$true } | ConvertTo-Json; Invoke-RestMethod -Method Post -Uri 'http://localhost:8080/api/confirmacion' -ContentType 'application/json' -Body $body | ConvertTo-Json -Depth 5"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "verify-confirmacion-db-local",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"exec",
+				"mi-postgres16",
+				"psql",
+				"-U",
+				"miusuario",
+				"-d",
+				"mibdd",
+				"-c",
+				"SELECT c.id, u.nombre, u.apellido, c.acompanante, c.alergias, c.fecha_confirmacion FROM confirmacion c JOIN usuario u ON u.id = c.usuario_id ORDER BY c.id DESC LIMIT 5;"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "test-confirmacion-api-curl",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -i -X POST http://localhost:8080/api/confirmacion -H \"Content-Type: application/json\" -d \"{\\\"nombre\\\":\\\"Juan\\\",\\\"apellido\\\":\\\"Perez\\\",\\\"alergias\\\":\\\"Prueba local\\\",\\\"acompanante\\\":true}\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-running-before-restart",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Write-Host '--- PORTS ---'; Get-NetTCPConnection -State Listen -LocalPort 4200,8080,5432 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize; Write-Host '--- DOCKER ---'; docker ps --format \"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "stop-front-back-local",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$ports = 4200,8080; foreach ($p in $ports) { $conns = Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction SilentlyContinue; if ($conns) { $ids = $conns | Select-Object -ExpandProperty OwningProcess -Unique; foreach ($id in $ids) { try { Stop-Process -Id $id -Force -ErrorAction Stop; Write-Host \"Stopped PID $id on port $p\" } catch {} } } }; docker rm -f wedding-api-local 2>$null | Out-Null; Write-Host 'Stopped backend container wedding-api-local if existed.'"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-postgres16-local",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"start",
+				"mi-postgres16"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-backend-local-docker",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker run --rm --name wedding-api-local -p 8080:8080 -e DB_URL=jdbc:postgresql://host.docker.internal:5432/mibdd -e DB_USERN=miusuario -e DB_PASSWORD=mipassword -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-local-nx",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_DAEMON=false&& set NX_INTERACTIVE=false&& set CI=true&& node node_modules/nx/bin/nx.js serve wedding-web"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "check-ports-after-restart",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200,8080,5432 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-docker-desktop",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$path = 'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe'; if (Test-Path $path) { Start-Process $path; Write-Host 'Docker Desktop started.' } else { Write-Host 'Docker Desktop not found.'; exit 1 }"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-docker-desktop-cmd",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"if exist \"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\" (start \"\" \"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\" && echo Docker Desktop launched) else (echo Docker Desktop not found && exit /b 1)"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-docker-daemon",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"version"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-docker-daemon-retry",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"info"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-postgres16-after-docker",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"start",
+				"mi-postgres16"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-backend-docker-fresh",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker rm -f wedding-api-local >nul 2>nul & docker run --rm --name wedding-api-local -p 8080:8080 -e DB_URL=jdbc:postgresql://host.docker.internal:5432/mibdd -e DB_USERN=miusuario -e DB_PASSWORD=mipassword -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-nx-fresh",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_DAEMON=false&& set NX_INTERACTIVE=false&& set CI=true&& node node_modules/nx/bin/nx.js serve wedding-web"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "ports-check-final",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$ports = 4200,8080,5432; foreach ($p in $ports) { $c = Get-NetTCPConnection -State Listen -LocalPort $p -ErrorAction SilentlyContinue; if ($c) { \"PORT $p LISTEN\" } else { \"PORT $p NOT_LISTEN\" } }"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "netstat-check-ports",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"netstat -ano | findstr \":4200 :8080 :5432\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-docker-ready-now",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"info"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-postgres16-now",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"start",
+				"mi-postgres16"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-backend-local-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker rm -f wedding-api-local >nul 2>nul & docker run --rm --name wedding-api-local -p 8080:8080 -e DB_URL=jdbc:postgresql://host.docker.internal:5432/mibdd -e DB_USERN=miusuario -e DB_PASSWORD=mipassword -v %cd%:/workspace -w /workspace/apps/wedding-api maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-local-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set NX_DAEMON=false&& set NX_INTERACTIVE=false&& set NX_ADD_PLUGINS=false&& set CI=true&& node node_modules/nx/bin/nx.js serve wedding-web"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-ports-up-now",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200,8080,5432 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Sort-Object LocalPort | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-docker-node",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker rm -f wedding-web-local >nul 2>nul & docker run --rm --name wedding-web-local -p 4200:4200 -v %cd%:/workspace -w /workspace node:20-bullseye sh -lc \"npm install && npx nx serve wedding-web --host 0.0.0.0 --port 4200\""
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-ports-final-now",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200,8080,5432 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Sort-Object LocalPort | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "verify-port-4200-only",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-web-container-status",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"-a",
+				"--filter",
+				"name=wedding-web-local",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-back-container-status",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"-a",
+				"--filter",
+				"name=wedding-api-local",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-docker-node-retry",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker rm -f wedding-web-local >nul 2>nul & docker run --rm --name wedding-web-local -p 4200:4200 -v %cd%:/workspace -w /workspace node:20-bullseye sh -lc \"npm install --no-audit --no-fund && npx nx serve wedding-web --host 0.0.0.0 --port 4200\""
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-services-now",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-docker-fixed",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"run",
+				"--rm",
+				"--name",
+				"wedding-web-local",
+				"-p",
+				"4200:4200",
+				"-v",
+				"C:\\Users\\6003369\\Desktop\\Proyecto_TS\\Dino\\proyect_Dino:/workspace",
+				"-w",
+				"/workspace",
+				"node:20-bullseye",
+				"bash",
+				"-lc",
+				"npm install --no-audit --no-fund && npx nx serve wedding-web --host 0.0.0.0 --port 4200"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-all-services-final",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "diagnose-docker-ps",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "diagnose-front-logs",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"logs",
+				"--tail",
+				"120",
+				"wedding-web-local"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "diagnose-back-logs",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"logs",
+				"--tail",
+				"120",
+				"wedding-api-local"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "diagnose-http-local",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"try { (Invoke-WebRequest -Uri 'http://localhost:4200' -UseBasicParsing -TimeoutSec 8).StatusCode } catch { $_.Exception.Message }; try { (Invoke-WebRequest -Uri 'http://localhost:8080/api/detalles-boda' -UseBasicParsing -TimeoutSec 8).StatusCode } catch { $_.Exception.Message }"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-static-4200",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"npx serve -s dist/apps/wedding-web -l 4200"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-localhost-4200-8080",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"try { (Invoke-WebRequest -Uri 'http://localhost:4200' -UseBasicParsing -TimeoutSec 8).StatusCode } catch { $_.Exception.Message }; try { (Invoke-WebRequest -Uri 'http://localhost:8080/api/detalles-boda' -Headers @{Accept='application/json'} -UseBasicParsing -TimeoutSec 8).StatusCode } catch { $_.Exception.Message }"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "verify-back-8080-http",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"curl -s -o NUL -w \"%{http_code}\" http://localhost:8080/api/detalles-boda"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "state-docker-and-ports-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"docker ps --format \"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}\" & netstat -ano | findstr /R \":4200 .*LISTENING\\|:8080 .*LISTENING\\|:5432 .*LISTENING\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "build-frontend-in-docker",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"run",
+				"--rm",
+				"-v",
+				"C:\\Users\\6003369\\Desktop\\Proyecto_TS\\Dino\\proyect_Dino:/workspace",
+				"-w",
+				"/workspace",
+				"node:20-bullseye",
+				"bash",
+				"-lc",
+				"npm install --no-audit --no-fund && npx nx build wedding-web --configuration=production"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "build-frontend-in-docker-devdeps",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"run",
+				"--rm",
+				"-v",
+				"C:\\Users\\6003369\\Desktop\\Proyecto_TS\\Dino\\proyect_Dino:/workspace",
+				"-w",
+				"/workspace",
+				"node:20-bullseye",
+				"bash",
+				"-lc",
+				"npm install --include=dev --no-audit --no-fund && node node_modules/nx/bin/nx.js build wedding-web --configuration=production"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "serve-new-dist-4200",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :4200 ^| findstr LISTENING') do taskkill /F /PID %a >nul 2>nul & docker rm -f wedding-web-local >nul 2>nul & docker run --rm --name wedding-web-local -p 4200:3000 -v C:\\Users\\6003369\\Desktop\\Proyecto_TS\\Dino\\proyect_Dino\\dist\\apps\\wedding-web:/app -w /app node:20-bullseye bash -lc \"npx serve -s . -l 3000\""
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "check-services-after-new-dist",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-frontend-static-updated",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"--yes",
+				"serve",
+				"-s",
+				"dist/apps/wedding-web",
+				"-l",
+				"4200"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "check-4200-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"netstat -ano | findstr \":4200\""
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "reinstall-nx-clean",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"if exist .nx rmdir /s /q .nx && if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del /f /q package-lock.json && npm install"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "stop-old-back-container",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"rm",
+				"-f",
+				"wedding-api-local"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-back-nx-after-fix",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:back"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "start-front-nx-after-fix",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:front"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-nx-services-up",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200,8080 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Sort-Object LocalPort | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "restart-back-nx-dockerized",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:back"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "check-back-port-8080",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 8080 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-back-docker-container",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"-a",
+				"--filter",
+				"name=wedding-api-local",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-front-port-4200-final",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 4200 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-backend-8080-now",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 8080 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "check-backend-container-now",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--filter",
+				"name=wedding-api-local",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "inspect-back-container-all",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"-a",
+				"--filter",
+				"name=wedding-api-local",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-backend-local",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"start:back"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "verify-back-port",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-NetTCPConnection -State Listen -LocalPort 8080 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "verify-back-container",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"ps",
+				"--filter",
+				"name=wedding-api-local",
+				"--format",
+				"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "inspect-8080-process-28952",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-Process -Id 28952 | Select-Object Id,ProcessName,Path | Format-List"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "inspect-8080-process-31376",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-Process -Id 31376 | Select-Object Id,ProcessName,Path | Format-List"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "start-back-local-nodocker",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"scripts/start-backend-local.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "debug-start-back-local-nodocker",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"scripts/start-backend-local.ps1"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "debug-start-back-local-nodocker-v2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"scripts/start-backend-local.ps1"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

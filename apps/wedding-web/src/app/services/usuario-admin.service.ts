@@ -61,11 +61,6 @@ export class UsuarioAdminService {
   }
 
   private resolveApiBaseUrl(): string {
-    const configuredUrl = (globalThis as { __WEDDING_API_URL__?: string }).__WEDDING_API_URL__;
-    if (configuredUrl) {
-      return `${configuredUrl.replace(/\/$/, '')}/usuarios`;
-    }
-
-    return 'https://proyect-dino.onrender.com/api/usuarios';
+    return 'http://localhost:8080/api/usuarios';
   }
 }

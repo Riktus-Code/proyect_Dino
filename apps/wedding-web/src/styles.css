@@ -1,48 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
 :root {
-	--content-max-width: 920px;
-	--content-side-padding: 20px;
+	--content-max-width: 1040px;
+	--content-side-padding: 24px;
+	--ivory: #fbf7f0;
+	--porcelain: #f3ece0;
+	--sage: #6d7c6b;
+	--forest: #33443a;
+	--ink: #2d2a26;
+	--muted: #6f665b;
+	--gold: #b6975f;
+	--gold-soft: #dbc89e;
+	--card: #fffdf8;
+	--line: #e7dcc7;
 }
 
 * {
 	box-sizing: border-box;
 }
 
+html,
 body {
 	margin: 0;
+	padding: 0;
 }
 
-.swal2-popup.wedding-swal-popup {
-	border: 1px solid #d5e1ee;
-	border-radius: 22px;
-	box-shadow: 0 20px 40px rgba(22, 48, 71, 0.18);
-	padding: 1.5rem 1.25rem 1.25rem;
+body {
+	font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--ink);
+	background:
+		radial-gradient(circle at 15% 18%, rgba(219, 200, 158, 0.22), transparent 38%),
+		radial-gradient(circle at 82% 10%, rgba(109, 124, 107, 0.18), transparent 34%),
+		linear-gradient(150deg, #f7f1e6 0%, #f5efe3 48%, #eee2cf 100%);
+	min-height: 100vh;
+	line-height: 1.55;
 }
 
-.swal2-popup.wedding-swal-popup .swal2-title,
-.swal2-popup.wedding-swal-title {
-	color: #163047;
-	font-size: 1.45rem;
-	font-weight: 700;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+	letter-spacing: 0.01em;
+	color: #2b241c;
+	margin-top: 0;
 }
 
-.swal2-popup.wedding-swal-popup .swal2-html-container {
-	color: #34566f;
-	font-size: 1rem;
-	line-height: 1.5;
-}
-
-.swal2-popup .swal2-confirm.wedding-swal-confirm {
-	border-radius: 999px;
-	padding: 0.7rem 1.4rem;
-	font-weight: 700;
-	box-shadow: none;
-}
-
-.page-content {
-	width: 100%;
-	max-width: var(--content-max-width);
-	margin: 0 auto;
-	padding: 32px var(--content-side-padding);
+a {
+	color: inherit;
 }
 
 .container {
@@ -51,4 +58,356 @@ body {
 	margin: 0 auto;
 	padding-left: var(--content-side-padding);
 	padding-right: var(--content-side-padding);
+}
+
+.page-content {
+	width: 100%;
+	max-width: var(--content-max-width);
+	margin: 0 auto;
+	padding: 36px var(--content-side-padding);
+}
+
+.top-header,
+.simple-header {
+	position: sticky;
+	top: 0;
+	z-index: 15;
+	width: 100%;
+	border-bottom: 1px solid var(--line);
+	background: rgba(251, 247, 240, 0.85);
+	backdrop-filter: blur(8px);
+	box-shadow: 0 6px 20px rgba(83, 72, 56, 0.08);
+}
+
+.header-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 14px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+.main-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.main-nav a,
+.inicio-link {
+	text-decoration: none;
+	color: var(--forest);
+	padding: 8px 14px;
+	border-radius: 999px;
+	font-weight: 600;
+	font-size: 0.92rem;
+	letter-spacing: 0.02em;
+	transition: all 180ms ease;
+	border: 1px solid transparent;
+}
+
+.main-nav a:hover,
+.inicio-link:hover {
+	border-color: var(--gold-soft);
+	background: rgba(219, 200, 158, 0.2);
+	color: #2f2820;
+}
+
+.active-link {
+	background: #41362a;
+	color: #fff8ea !important;
+	border-color: #41362a !important;
+}
+
+.header-login {
+	display: flex;
+}
+
+.login-icon-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 999px;
+	border: 1px solid var(--gold-soft);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	background: rgba(255, 252, 244, 0.9);
+	transition: all 180ms ease;
+}
+
+.login-icon-btn:hover {
+	transform: translateY(-1px);
+	background: #fff;
+	box-shadow: 0 8px 18px rgba(120, 94, 56, 0.16);
+}
+
+.icon-user {
+	width: 16px;
+	height: 16px;
+	position: relative;
+}
+
+.icon-user::before,
+.icon-user::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	border: 1.6px solid #5f4f3a;
+	border-radius: 999px;
+}
+
+.icon-user::before {
+	top: 0;
+	width: 7px;
+	height: 7px;
+	background: #fff;
+}
+
+.icon-user::after {
+	bottom: 0;
+	width: 13px;
+	height: 8px;
+	border-top: none;
+}
+
+.logged-box {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	padding: 5px 7px;
+	border-radius: 999px;
+	background: rgba(255, 253, 247, 0.72);
+	border: 1px solid var(--line);
+}
+
+.logged-box span {
+	font-weight: 600;
+	color: var(--forest);
+	font-size: 0.9rem;
+	padding-left: 8px;
+}
+
+input,
+textarea,
+select,
+button {
+	font: inherit;
+}
+
+button {
+	border: 1px solid #5f5038;
+	border-radius: 999px;
+	padding: 10px 18px;
+	background: linear-gradient(145deg, #645235, #443824);
+	color: #fff7ea;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	cursor: pointer;
+	transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+button:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 18px rgba(80, 63, 36, 0.28);
+}
+
+button:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+input,
+textarea,
+select {
+	border: 1px solid #d6c7ae;
+	border-radius: 12px;
+	padding: 12px 13px;
+	background: rgba(255, 252, 247, 0.96);
+	color: #2d2a26;
+	transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	border-color: #b6975f;
+	box-shadow: 0 0 0 3px rgba(182, 151, 95, 0.2);
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid var(--line);
+	background: var(--card);
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+th,
+td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid var(--line);
+}
+
+th {
+	background: rgba(219, 200, 158, 0.18);
+	font-weight: 700;
+	color: #433523;
+}
+
+.swal2-popup.wedding-swal-popup {
+	border: 1px solid var(--line);
+	border-radius: 24px;
+	box-shadow: 0 24px 44px rgba(66, 52, 32, 0.24);
+	padding: 1.7rem 1.35rem 1.35rem;
+	background: linear-gradient(180deg, #fffdf8 0%, #faf5eb 100%);
+}
+
+.swal2-popup.wedding-swal-popup .swal2-title,
+.swal2-popup.wedding-swal-title {
+	font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+	color: #3e3022;
+	font-size: 1.7rem;
+	font-weight: 700;
+}
+
+.swal2-popup.wedding-swal-popup .swal2-html-container {
+	color: #5d5245;
+	font-size: 1.02rem;
+	line-height: 1.55;
+}
+
+.swal2-popup .swal2-confirm.wedding-swal-confirm {
+	border-radius: 999px;
+	padding: 0.7rem 1.55rem;
+	font-weight: 700;
+	box-shadow: none;
+}
+
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (max-width: 900px) {
+	:root {
+		--content-side-padding: 16px;
+	}
+
+	.header-inner {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.main-nav {
+		justify-content: center;
+	}
+}
+
+@media (max-width: 768px) {
+	body {
+		background:
+			radial-gradient(circle at 15% 10%, rgba(219, 200, 158, 0.16), transparent 34%),
+			radial-gradient(circle at 85% 0%, rgba(109, 124, 107, 0.12), transparent 28%),
+			linear-gradient(150deg, #f7f1e6 0%, #f4ead9 55%, #eee2cf 100%);
+	}
+
+	.container,
+	.page-content {
+		padding-left: 14px;
+		padding-right: 14px;
+	}
+
+	.top-header,
+	.simple-header {
+		position: static;
+	}
+
+	.main-nav a,
+	.inicio-link {
+		padding: 8px 12px;
+		font-size: 0.88rem;
+	}
+
+	button {
+		padding: 10px 16px;
+	}
+
+	.logged-box {
+		justify-content: space-between;
+	}
+
+	.swal2-popup.wedding-swal-popup {
+		padding: 1.25rem 1rem 1rem;
+	}
+}
+
+@media (max-width: 520px) {
+	:root {
+		--content-side-padding: 12px;
+	}
+
+	.container,
+	.page-content {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.header-inner {
+		gap: 10px;
+	}
+
+	.main-nav {
+		gap: 6px;
+	}
+
+	.main-nav a,
+	.inicio-link {
+		padding: 7px 10px;
+		font-size: 0.84rem;
+	}
+
+	.login-icon-btn {
+		width: 36px;
+		height: 36px;
+	}
+
+	.logged-box {
+		width: 100%;
+		padding: 6px 8px;
+	}
+
+	.logged-box span {
+		font-size: 0.82rem;
+		padding-left: 6px;
+	}
+
+	button,
+	input,
+	textarea,
+	select {
+		border-radius: 10px;
+	}
+
+	.swal2-popup.wedding-swal-popup .swal2-title,
+	.swal2-popup.wedding-swal-title {
+		font-size: 1.4rem;
+	}
+
+	.swal2-popup.wedding-swal-popup .swal2-html-container {
+		font-size: 0.95rem;
+	}
 }

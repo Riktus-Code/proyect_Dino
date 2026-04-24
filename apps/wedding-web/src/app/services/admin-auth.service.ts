@@ -52,11 +52,6 @@ export class AdminAuthService {
   }
 
   private resolveApiBaseUrl(): string {
-    const configuredUrl = (globalThis as { __WEDDING_API_URL__?: string }).__WEDDING_API_URL__;
-    if (configuredUrl) {
-      return `${configuredUrl.replace(/\/$/, '')}/auth`;
-    }
-
-    return 'https://proyect-dino.onrender.com/api/auth';
+    return 'http://localhost:8080/api/auth';
   }
 }

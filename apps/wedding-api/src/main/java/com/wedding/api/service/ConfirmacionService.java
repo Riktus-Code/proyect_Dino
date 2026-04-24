@@ -6,6 +6,11 @@ import com.wedding.api.entity.Usuario;
 import com.wedding.api.repository.ConfirmacionRepository;
 import com.wedding.api.repository.UsuarioRepository;
 import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -13,15 +18,23 @@ import org.springframework.util.StringUtils;
 @Service
 public class ConfirmacionService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmacionService.class);
+
     private final UsuarioRepository usuarioRepository;
     private final ConfirmacionRepository confirmacionRepository;
+    private final JavaMailSender mailSender;
+
+    @Value("${app.mail.to:${spring.mail.username}}")
+    private String correoDestino;
 
     public ConfirmacionService(
             UsuarioRepository usuarioRepository,
-            ConfirmacionRepository confirmacionRepository
+            ConfirmacionRepository confirmacionRepository,
+            JavaMailSender mailSender
     ) {
         this.usuarioRepository = usuarioRepository;
         this.confirmacionRepository = confirmacionRepository;
+        this.mailSender = mailSender;
     }
 
     @Transactional
@@ -49,8 +62,7 @@ public class ConfirmacionService {
         confirmacion.setFechaConfirmacion(LocalDateTime.now());
         confirmacionRepository.save(confirmacion);
 
-        // SMTP pausado temporalmente: por ahora solo se guarda la confirmacion en base de datos.
-        // enviarCorreoConfirmacion(usuario, confirmacion);
+        enviarCorreoConfirmacion(usuario, confirmacion);
 
         String mensajeRespuesta = Boolean.TRUE.equals(acompanante)
                 ? "Confirmación guardada. El usuario asistirá acompañado."
@@ -61,5 +73,37 @@ public class ConfirmacionService {
 
     private String limpiarTexto(String texto) {
         return texto == null ? "" : texto.trim();
+    }
+
+    private void enviarCorreoConfirmacion(Usuario usuario, Confirmacion confirmacion) {
+        try {
+            SimpleMailMessage mensaje = new SimpleMailMessage();
+            mensaje.setTo(correoDestino);
+            mensaje.setFrom("manolito6989@gmail.com");
+            mensaje.setSubject("Confirmación de asistencia");
+            mensaje.setText(construirCuerpoCorreo(usuario, confirmacion));
+            mailSender.send(mensaje);
+        } catch (Exception exception) {
+            LOGGER.error("ERROR AL ENVIAR EL CORREO", exception);
+            exception.printStackTrace();
+        }
+    }
+
+    private String construirCuerpoCorreo(Usuario usuario, Confirmacion confirmacion) {
+        String estadoAcompanante = Boolean.TRUE.equals(confirmacion.getAcompanante())
+                ? "ira acompañado"
+                : "no ira acompañado";
+
+        return "El usuario "
+                + usuario.getNombre()
+                + " "
+                + usuario.getApellido()
+                + " ha confirmado su asistencia.\n"
+                + "Ira acompañado: "
+                + estadoAcompanante
+                + ".\n"
+                + "Tiene los alergenos "
+                + confirmacion.getAlergias()
+                + ".";
     }
 }
